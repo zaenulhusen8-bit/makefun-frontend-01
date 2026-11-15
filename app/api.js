@@ -49,9 +49,9 @@ export function timeLeft(deadlineISO) {
   const days = Math.floor(hours / 24);
   const remainingHours = hours % 24;
   const remainingMins = mins % 60;
-  if (days > 0) return `${days}d ${remainingHours}h`;
-  if (hours > 0) return `${hours}h ${remainingMins}m`;
-  return `${remainingMins}m`;
+  if (days > 0) return `${days}d ${remainingHours}h left`;
+  if (hours > 0) return `${hours}h ${remainingMins}m left`;
+  return `${remainingMins}m left`;
 }
 
 /**

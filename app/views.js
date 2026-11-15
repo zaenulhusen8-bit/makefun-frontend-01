@@ -11,7 +11,7 @@ export function esc(s) {
 
 function metaRow(pot, fee, deadline, entries, status) {
   return '<p class="meta"><span>Pot ' + pot + '</span><span>Fee ' + fee + '</span><span>' +
-    timeLeft(deadline) + ' left</span><span>' + entries + ' entries</span><span>' + status + '</span></p>';
+    timeLeft(deadline) + '</span><span>' + entries + ' entries</span><span>' + status + '</span></p>';
 }
 
 export async function renderBoard(el) {
@@ -27,7 +27,7 @@ export async function renderBoard(el) {
         html += '<article class="card"><h3><a href="#/bounty/' + item.slug + '">' + esc(item.title) + '</a></h3>' +
           '<p class="pot">' + money(item.potUsd ?? item.rewardAmount) + '</p>' +
           '<p class="meta"><span>Fee ' + money(item.entryFeeUsd ?? 0) + '</span><span>' + timeLeft(item.deadline) +
-          ' left</span><span>' + (item.submissionCount ?? 0) + ' entries</span><span>' +
+          '</span><span>' + (item.submissionCount ?? 0) + ' entries</span><span>' +
           (isOpen(item) ? 'Open' : 'Closed') + '</span></p></article>';
       }
       html += '</div>';
@@ -44,18 +44,18 @@ export async function renderBounty(el, slug) {
     el.innerHTML = '<p class="muted">Loading…</p>';
     const c = await getJSON('/competitions/' + encodeURIComponent(slug));
     const pot = money(c.potUsd ?? c.rewardAmount);
-    let html = '<h1>' + esc(c.title) + '</h1><p class="subtitle">' + esc(c.sponsor || c.category || '') + '</p>';
-    if (c.description) html += '<p class="description">' + esc(c.description) + '</p>';
+    let html = '<h1>' + esc(c.title) + '</h1><p class="subtitle">' + esc((c.sponsor && c.sponsor.name) || c.category || '') + '</p>';
     html += metaRow(pot, money(c.entryFeeUsd ?? 0), c.deadline, (c.submissionCount ?? 0),
       (isOpen(c) ? 'Open' : 'Closed'));
     const rewards = c.rewardsNow || c.rewards;
     if (Array.isArray(rewards) && rewards.length) {
       html += '<table class="rewards"><thead><tr><th>Place</th><th>Reward</th></tr></thead><tbody>';
       for (const r of rewards) {
-        html += '<tr><td>' + esc(r.place ?? r.label ?? '') + '</td><td>' + money(r.amount) + '</td></tr>';
+        html += '<tr><td>' + esc(r.place ?? r.label ?? '') + '</td><td>' + money(r.amountUsd ?? r.amount) + '</td></tr>';
       }
       html += '<tr><td>Live pot</td><td>' + pot + '</td></tr></tbody></table>';
     }
+    if (c.description) html += '<p class="description">' + esc(c.description) + '</p>';
     if (Array.isArray(c.rules) && c.rules.length) {
       html += '<h2>Rules</h2><ul>';
       for (const rule of c.rules) html += '<li>' + esc(rule) + '</li>';
