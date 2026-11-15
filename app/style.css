@@ -52,6 +52,7 @@ thead th{color:var(--muted);font-size:13px;font-weight:600;text-align:left}
 tbody tr:last-child td,tbody tr:last-child th{border-bottom:0}
 .rewards th{color:var(--muted);text-align:left}
 .rewards td{text-align:right}
+.rewards td:first-child{text-align:left}
 .leaderboard .rank{font-weight:700}
 form{display:flex;flex-direction:column;gap:12px;max-width:420px}
 label{font-size:14px;color:var(--muted)}
