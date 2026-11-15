@@ -19,5 +19,6 @@ const dossier = buildDossier(out, {
   app_max_files: 993,
   app_max_bytes: 16777216,
 });
+if (!dossier || dossier.length < 100) throw new Error('dossier too small');
 writeFileSync(join(out, 'dossier.json'), dossier);
 console.log('wrote ' + join(out, 'dossier.json') + ' (' + dossier.length + ' bytes)');
